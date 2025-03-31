@@ -33,8 +33,28 @@ public class App {
                     case 1:
                         cadastrarProduto();
                         break;
+                    case 2:
+                        pesquisarProduto();
+                        break;
                 }
             }
+        }
+    }
+
+    public static void pesquisarProduto() {
+        String nome = showInputDialog("Nome do produto");
+        No<Produto> aux = listaProduto.pesquisar(new Produto(nome));
+        if(aux == null) {
+            showMessageDialog(null, nome + " não encontrado");
+        }
+        else {
+            Produto produto = aux.getDado();
+            String mensagem = "";
+            mensagem += "Nome do produto: " + nome + "\n";
+            mensagem += "Quantidade em estoque: " + produto.getQuantidadeEstoque() + "\n";
+            mensagem += "Valor unitário R$ " + produto.getValorUnitario() + "\n";
+            mensagem += "Fornecedor: " + produto.getFornecedor().getNome();
+            showMessageDialog(null, mensagem);
         }
     }
 
@@ -75,6 +95,10 @@ public class App {
         aux = listaFornecedor.pesquisar(new Fornecedor(cnpj));
         if(aux != null) {
             fornecedor = aux.getDado();
+            showMessageDialog(null, fornecedor.getNome() + " cadastrado");
+        }
+        else {
+            showMessageDialog(null, cnpj + " não encontrado");
         }
 
         return fornecedor; 
